@@ -1,0 +1,45 @@
+*** Settings ***
+Documentation     1. read a file and gather inforamtion.
+...
+...               2. write the information to another file.
+...
+...               3. compare two file.
+Library           OperatingSystem
+Library           String
+Library           Collections
+Library           DiffLibrary
+
+*** Variables ***
+${filePath}       Source.txt
+${newfile}        target.txt
+
+*** Test Cases ***
+Test
+    @{Lines}    Read File And Store In List By Line    ${filePath}
+    Write To New File    ${newfile}    @{Lines}
+    @{Lines2}    Read File And Store In List By Line    ${newfile}
+    Compare two List    ${Lines}    ${Lines2}
+    Diff Files    ${filePath}    ${newfile}
+
+*** Keyword ***
+Read File And Store In List By Line
+    [Arguments]    ${file}
+    ${contents}    Get File    ${file}
+    @{lines}    Split to lines    ${contents}
+    [Return]    @{Lines}
+
+Write To New File
+    [Arguments]    ${Path}    @{Lines}
+    Remove File    ${Path}
+    : FOR    ${line}    IN    @{lines}
+    \    log    ${line}
+    \    Append To File    ${Path}    ${line}
+    \    Append To File    ${Path}    \n
+
+Compare two List
+    [Arguments]    ${Lines}    ${Lines2}
+    ${length}    Get Length    ${Lines}
+    : FOR    ${index}    IN RANGE    ${length}
+    \    ${line1}    Get From List    ${Lines}    ${index}
+    \    ${line2}    Get From List    ${Lines2}    ${index}
+    \    Should Be Equal    ${line1}    ${line2}

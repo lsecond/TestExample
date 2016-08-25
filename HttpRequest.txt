@@ -1,4 +1,5 @@
 *** Settings ***
+Documentation     test one page is unaccessable by use http request.
 Library           HttpLibrary.HTTP
 
 *** Test Cases ***
