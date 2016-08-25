@@ -1,0 +1,9 @@
+*** Settings ***
+Library           HttpLibrary.HTTP
+
+*** Test Cases ***
+Get Request If Page Unauthorized
+    Create HTTP Context    qaautomation-00:7070    http
+    Run Keyword And Expect Error    Request should have succeeded, but was "401 Unauthorized".    GET    /302
+
+*** Keywords ***
