@@ -1,0 +1,20 @@
+*** Setting ***
+Library           DatabaseLibrary
+
+*** Variables ***
+
+*** Test Cases ***
+Connect To Database
+    [Documentation]    for database access
+    ...
+    ...    install mysql database driver first:
+    ...
+    ...    pip install MySQL-python
+    ...
+    ...    pip install pymysql
+    Connect To Database    pymysql    TEST    root    portdemo    10.255.10.79    3306
+    @{results}=    Query    Select * from defect
+    : FOR    ${result}    IN    @{results}
+    \    log    ${result}
+
+*** Keyword ***
