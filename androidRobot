@@ -1,0 +1,14 @@
+*** Settings ***
+Resource          ../Resource/Setup.txt
+
+*** Test Cases ***
+Login
+    [Tags]    regression
+    Open Application    http://127.0.0.1:4723/wd/hub    platformName=Android    platformVersion=4.4.2    deviceName=n4    app=c:/temp/android-debug.apk    automationName=appium
+    Change To webview
+    Input User Name    ${user}
+    Input Password    ${password}
+    Click Login Button
+    [Teardown]
+
+*** Keywords ***
